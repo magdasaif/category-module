@@ -208,7 +208,9 @@ class CategoryServiceProvider extends ServiceProvider
 
         // Destination path in the main project's config directory
         $destinationPath = config_path("{$newConfigFileName}.php");
-
+        if (!file_exists($destinationPath)) {
+            touch($destinationPath);
+        }
         // Check if the module's config file exists
         if (File::exists($moduleConfigPath)) {
             // Copy the config file to the main project's config directory
