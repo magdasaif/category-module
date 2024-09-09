@@ -2,6 +2,7 @@
 
 namespace Modules\Category\Providers;
 
+use Illuminate\Support\Facades\File;
 use Spatie\Html\HtmlServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -26,8 +27,9 @@ class CategoryServiceProvider extends ServiceProvider
         $this->publishConfig();
         $this->ensureModuleIsRegistered();
         $this->ensureModuleStructureExists();
-        $this->ensureModuleConfigExists();
         $this->ensureModulePublicExists();
+        // $this->ensureModuleConfigExists();
+        $this->copyModuleConfigToMainProject('Category', 'config', 'category');
         // $this->call('vendor:publish', ['--tag' => 'category-public']);
     }
     //=======================================================================
@@ -197,6 +199,25 @@ class CategoryServiceProvider extends ServiceProvider
         $dir = opendir($sourceDir);
         copy($sourceDir,$modulePath);
         closedir($dir);
+    }
+    //=======================================================================
+    function copyModuleConfigToMainProject($moduleName, $configFileName, $newConfigFileName){
+        // Path to the module's config file
+        // $moduleConfigPath = base_path("modules/{$moduleName}/config/{$configFileName}.php");
+        $moduleConfigPath = dirname(__DIR__)  . '/../config/config.php';
+
+        // Destination path in the main project's config directory
+        $destinationPath = config_path("{$newConfigFileName}.php");
+
+        // Check if the module's config file exists
+        if (File::exists($moduleConfigPath)) {
+            // Copy the config file to the main project's config directory
+            File::copy($moduleConfigPath, $destinationPath);
+
+            return "Config file copied successfully to config directory.";
+        }
+
+        return "Module config file not found.";
     }
     //=======================================================================
     protected function ensureModulePublicExists(): void{
