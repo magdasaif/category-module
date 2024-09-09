@@ -1,0 +1,42 @@
+{
+    "name": "magdasaif/category-module",
+    "description": "",
+    "type":"laravel-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "magdasaif",
+            "email": "magdasaif3@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Category\\Providers\\CategoryServiceProvider",
+                "Modules\\Category\\Providers\\EventServiceProvider",
+                "Modules\\Category\\Providers\\RouteServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Category\\": "app/",
+            "Modules\\Category\\Database\\Factories\\": "database/factories/",
+            "Modules\\Category\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Category\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^8.2",
+        "nwidart/laravel-modules": "^11.0",
+        "laravel/helpers": "^1.7"
+    }
+}

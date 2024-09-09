@@ -1,0 +1,366 @@
+@font-face {
+  font-family: 'tamIcons';
+  src:  url('/fonts/icons/tamIcons.eot?omafzm');
+  src:  url('/fonts/icons/tamIcons.eot?omafzm#iefix') format('embedded-opentype'),
+    url('/fonts/icons/tamIcons.ttf?omafzm') format('truetype'),
+    url('/fonts/icons/tamIcons.woff?omafzm') format('woff'),
+    url('/fonts/icons/tamIcons.svg?omafzm#tamIcons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon_"], [class*=" icon_"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'tamIcons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon_chat:before {
+  content: "\e918";
+}
+.icon_edit:before {
+  content: "\e917";
+}
+.icon_camera:before {
+  content: "\e916";
+}
+.icon_hospital:before {
+  content: "\e900";
+}
+.icon_university:before {
+  content: "\e901";
+}
+.icon_spa:before {
+  content: "\e902";
+}
+.icon_gym:before {
+  content: "\e903";
+}
+.icon_fashion:before {
+  content: "\e904";
+}
+.icon_email:before {
+  content: "\e905";
+}
+.icon_email_1:before {
+  content: "\e906";
+}
+.icon_location:before {
+  content: "\e907";
+}
+.icon_location_1:before {
+  content: "\e908";
+}
+.icon_marketing:before {
+  content: "\e909";
+}
+.icon_phone:before {
+  content: "\e90a";
+}
+.icon_presentation:before {
+  content: "\e90b";
+}
+.icon_spam:before {
+  content: "\e90c";
+}
+.icon_telephone:before {
+  content: "\e90d";
+}
+.icon_whatsapp:before {
+  content: "\e90e";
+}
+.icon_left_quotes:before {
+  content: "\e90f";
+}
+.icon_right_quotes:before {
+  content: "\e910";
+}
+.icon_client:before {
+  content: "\e911";
+}
+.icon_merchant:before {
+  content: "\e912";
+}
+.icon_send:before {
+  content: "\e913";
+}
+.icon_left_arrow:before {
+  content: "\e914";
+}
+.icon_right_arrow:before {
+  content: "\e915";
+}
+.icon_new_product:before {
+  content: "\e919";
+}
+.icon_meeting:before {
+  content: "\e91a";
+}
+.icon_target:before {
+  content: "\e91b";
+}
+.icon_letter:before {
+  content: "\e91c";
+}
+.icon_home:before {
+  content: "\e91d";
+}
+.icon_newspaper:before {
+  content: "\e91e";
+}
+.icon_about:before {
+  content: "\e91f";
+}
+.icon_profile:before {
+  content: "\e920";
+}
+.icon_polygon:before {
+  content: "\e921";
+}
+.icon_placeholder:before {
+  content: "\e922";
+}
+.icon_notification:before {
+  content: "\e925";
+}
+.icon_order:before {
+  content: "\e926";
+}
+.icon_all:before {
+  content: "\e927";
+}
+.icon_aloe_vera:before {
+  content: "\e923";
+}
+.icon_aromatherapy:before {
+  content: "\e924";
+}
+.icon_bamboo:before {
+  content: "\e928";
+}
+.icon_bathrope:before {
+  content: "\e929";
+}
+.icon_bathtub:before {
+  content: "\e92a";
+}
+.icon_beverage:before {
+  content: "\e92b";
+}
+.icon_bonfire:before {
+  content: "\e92c";
+}
+.icon_bucket:before {
+  content: "\e92d";
+}
+.icon_candles:before {
+  content: "\e92e";
+}
+.icon_cream:before {
+  content: "\e92f";
+}
+.icon_essential:before {
+  content: "\e930";
+}
+.icon_face_mask:before {
+  content: "\e931";
+}
+.icon_foot:before {
+  content: "\e932";
+}
+.icon_heater:before {
+  content: "\e933";
+}
+.icon_herbal:before {
+  content: "\e934";
+}
+.icon_honey:before {
+  content: "\e935";
+}
+.icon_lemon:before {
+  content: "\e936";
+}
+.icon_blackboard:before {
+  content: "\e937";
+}
+.icon_lotus_flower:before {
+  content: "\e938";
+}
+.icon_massage:before {
+  content: "\e939";
+}
+.icon_oil:before {
+  content: "\e93a";
+}
+.icon_sauna:before {
+  content: "\e93b";
+}
+.icon_scent:before {
+  content: "\e93c";
+}
+.icon_scoop:before {
+  content: "\e93d";
+}
+.icon_shampoo:before {
+  content: "\e93e";
+}
+.icon_shower:before {
+  content: "\e93f";
+}
+.icon_slippers:before {
+  content: "\e940";
+}
+.icon_spa1:before {
+  content: "\e941";
+}
+.icon_candle:before {
+  content: "\e942";
+}
+.icon_incense:before {
+  content: "\e943";
+}
+.icon_abacus:before {
+  content: "\e944";
+}
+.icon_acoustic_guitar:before {
+  content: "\e945";
+}
+.icon_ambulance:before {
+  content: "\e946";
+}
+.icon_band_aid:before {
+  content: "\e947";
+}
+.icon_bell:before {
+  content: "\e948";
+}
+.icon_blackboard_1:before {
+  content: "\e949";
+}
+.icon_book:before {
+  content: "\e94a";
+}
+.icon_books:before {
+  content: "\e94b";
+}
+.icon_books_1:before {
+  content: "\e94c";
+}
+.icon_camera1:before {
+  content: "\e94d";
+}
+.icon_diploma:before {
+  content: "\e94e";
+}
+.icon_dna:before {
+  content: "\e94f";
+}
+.icon_earth_globe:before {
+  content: "\e950";
+}
+.icon_exam:before {
+  content: "\e951";
+}
+.icon_exam_1:before {
+  content: "\e952";
+}
+.icon_first_aid_kit:before {
+  content: "\e953";
+}
+.icon_groceries:before {
+  content: "\e954";
+}
+.icon_heart:before {
+  content: "\e955";
+}
+.icon_hospital1:before {
+  content: "\e956";
+}
+.icon_student:before {
+  content: "\e957";
+}
+.icon_ink:before {
+  content: "\e958";
+}
+.icon_library:before {
+  content: "\e959";
+}
+.icon_injury:before {
+  content: "\e95a";
+}
+.icon_lungs:before {
+  content: "\e95b";
+}
+.icon_medical_history:before {
+  content: "\e95c";
+}
+.icon_medicine:before {
+  content: "\e95d";
+}
+.icon_medicine_1:before {
+  content: "\e95e";
+}
+.icon_medicine_2:before {
+  content: "\e95f";
+}
+.icon_mortarboard:before {
+  content: "\e960";
+}
+.icon_nurse:before {
+  content: "\e961";
+}
+.icon_open_book:before {
+  content: "\e962";
+}
+.icon_pill:before {
+  content: "\e963";
+}
+.icon_professor:before {
+  content: "\e964";
+}
+.icon_promotion:before {
+  content: "\e965";
+}
+.icon_school_material:before {
+  content: "\e966";
+}
+.icon_shop:before {
+  content: "\e967";
+}
+.icon_spaguetti:before {
+  content: "\e968";
+}
+.icon_student_1:before {
+  content: "\e969";
+}
+.icon_surgeon:before {
+  content: "\e96a";
+}
+.icon_syringe:before {
+  content: "\e96b";
+}
+.icon_tea:before {
+  content: "\e96c";
+}
+.icon_thermometer:before {
+  content: "\e96d";
+}
+.icon_tooth:before {
+  content: "\e96e";
+}
+.icon_transfusion:before {
+  content: "\e96f";
+}
+.icon_wheelchair:before {
+  content: "\e970";
+}
