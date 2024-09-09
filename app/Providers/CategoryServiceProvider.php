@@ -26,6 +26,8 @@ class CategoryServiceProvider extends ServiceProvider
         $this->publishConfig();
         $this->ensureModuleIsRegistered();
         $this->ensureModuleStructureExists();
+        $this->ensureModuleConfigExists();
+        $this->ensureModulePublicExists();
         // $this->call('vendor:publish', ['--tag' => 'category-public']);
     }
     //=======================================================================
@@ -197,7 +199,7 @@ class CategoryServiceProvider extends ServiceProvider
         closedir($dir);
     }
     //=======================================================================
-    protected function ensureModuleSPublicExists(): void{
+    protected function ensureModulePublicExists(): void{
         #check if Modules/Category folder not found will create it
         $modulePath = public_path('vendor/category');
         if (!is_dir($modulePath)){
