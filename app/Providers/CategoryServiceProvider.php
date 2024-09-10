@@ -18,7 +18,8 @@ class CategoryServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->loadMigrationsFrom(module_path($this->moduleName, 'database/migrations'));
+        // $this->loadMigrationsFrom(module_path($this->moduleName, 'database/migrations'));
+        $this->loadMigrationsFrom(dirname(__DIR__) .'/../database/migrations');
         //=======================================================================
         /*
             here we will handle 3 steps
@@ -62,20 +63,43 @@ class CategoryServiceProvider extends ServiceProvider
             // $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'lang'));
             //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             //change in lang path to be affect project
-            $this->loadTranslationsFrom(module_path($this->moduleName, 'resources/lang'), $this->moduleNameLower);
-            $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'resources/lang'));
+            // $this->loadTranslationsFrom(module_path($this->moduleName, 'resources/lang'), $this->moduleNameLower);
+            // $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'resources/lang'));
+            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            //use dirname(__DIR__)  instead of module_path
+            $this->loadTranslationsFrom(dirname(__DIR__) .'/../resources/lang', $this->moduleNameLower);
+            $this->loadJsonTranslationsFrom(dirname(__DIR__) .'/../resources/lang');
             //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         }
     }
     //=======================================================================
+    // protected function registerConfig(): void{
+    //     $this->publishes([module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php')], 'config');
+    //     $this->mergeConfigFrom(module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower);
+    // }
+    //=======================================================================
     protected function registerConfig(): void{
-        $this->publishes([module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php')], 'config');
-        $this->mergeConfigFrom(module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower);
+        #ensure it's looking for the config file in the correct location
+        // $sourcePath = __DIR__.'/../config/config.php'; //contain module name
+        $sourcePath =dirname(__DIR__) .'/../config/config.php'; //contain module name
+        if (file_exists($sourcePath))
+        {
+            #publish config file in config:folder to be appeared in external project
+            $this->publishes([$sourcePath => config_path($this->moduleNameLower.'.php')], 'config');
+            #put modulenamelower "contact" file in config folder in external project
+            $this->mergeConfigFrom($sourcePath, $this->moduleNameLower);
+        } else
+        {
+            \Illuminate\Support\Facades\Log::warning("Config file not found: {$sourcePath}");
+        }
+        // $this->publishes([module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php')], 'config');
+        // $this->mergeConfigFrom(module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower);
     }
     //=======================================================================
     public function registerViews(): void{
         $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
-        $sourcePath = module_path($this->moduleName, 'resources/views');
+        // $sourcePath = module_path($this->moduleName, 'resources/views');
+        $sourcePath = dirname(__DIR__) .'/../resources/views';
 
         $this->publishes([$sourcePath => $viewPath], ['views', $this->moduleNameLower.'-module-views']);
 
