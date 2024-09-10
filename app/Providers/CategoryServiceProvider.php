@@ -169,7 +169,7 @@ class CategoryServiceProvider extends ServiceProvider
                     $this->recursiveCopy($src . '/' . $file,$dst . '/' . $file);
                 }
                 else {
-                    if (!file_exists($src . '/' . $file,$dst . '/' . $file)) {
+                    if (!file_exists($dst . '/' . $file)) {
                         copy($src . '/' . $file,$dst . '/' . $file);
                     }
                 }
