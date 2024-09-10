@@ -55,8 +55,15 @@ class CategoryServiceProvider extends ServiceProvider
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
             $this->loadJsonTranslationsFrom($langPath);
         } else {
-            $this->loadTranslationsFrom(module_path($this->moduleName, 'lang'), $this->moduleNameLower);
-            $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'lang'));
+            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            //module default setting
+            // $this->loadTranslationsFrom(module_path($this->moduleName, 'lang'), $this->moduleNameLower);
+            // $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'lang'));
+            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            //change in lang path to be affect project
+            $this->loadTranslationsFrom(module_path($this->moduleName, 'resources/lang'), $this->moduleNameLower);
+            $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'resources/lang'));
+            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         }
     }
     //=======================================================================
