@@ -171,6 +171,7 @@ class CategoryServiceProvider extends ServiceProvider
                 else {
                     if (!file_exists($dst . '/' . $file)) {
                         copy($src . '/' . $file,$dst . '/' . $file);
+                        
                     }
                 }
             }
