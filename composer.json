@@ -1,7 +1,7 @@
 {
     "name": "magdasaif/category-module",
     "description": "",
-    "type":"laravel-module",
+    "type":"library",
     "license": "MIT",
     "authors": [
         {
@@ -37,7 +37,6 @@
     "require": {
         "php": "^8.2",
         "nwidart/laravel-modules": "^11.0",
-        "laravel/helpers": "^1.7",
-        "joshbrw/laravel-module-installer": "^2.0"
+        "laravel/helpers": "^1.7"
     }
 }

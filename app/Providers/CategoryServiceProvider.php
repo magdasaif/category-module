@@ -29,6 +29,7 @@ class CategoryServiceProvider extends ServiceProvider
         $this->copyModuleConfigToMainProject('category');
         $this->copyModulePublicToMainProject();
         $this->enableModule();
+        $this->ensureModuleStructureExists();
         //=======================================================================
     }
     //=======================================================================
@@ -144,7 +145,9 @@ class CategoryServiceProvider extends ServiceProvider
                     $this->recursiveCopy($src . '/' . $file,$dst . '/' . $file);
                 }
                 else {
-                    copy($src . '/' . $file,$dst . '/' . $file);
+                    if (!file_exists($src . '/' . $file,$dst . '/' . $file)) {
+                        copy($src . '/' . $file,$dst . '/' . $file);
+                    }
                 }
             }
         }
@@ -162,6 +165,18 @@ class CategoryServiceProvider extends ServiceProvider
             file_put_contents($modulesStatuses, json_encode($statuses));
         }
         //echo 'done';
+    }
+    //=======================================================================
+    protected function ensureModuleStructureExists(): void{
+        #check if Modules/Category folder not found will create it
+        $modulePath = base_path('Modules/Category');
+        if (!is_dir($modulePath)){
+            mkdir($modulePath, 0755, true);
+        }
+        // Copy necessary files from the package to the Modules/Category directory
+        #will copy from all folder in Category folder  and put it in Modules/Category
+        $sourceDir = dirname(__DIR__)  . '/..';
+        $this->recursiveCopy($sourceDir, $modulePath);
     }
     //=======================================================================
 }
