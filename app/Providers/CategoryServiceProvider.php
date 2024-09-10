@@ -3,57 +3,44 @@
 namespace Modules\Category\Providers;
 
 use Illuminate\Support\Facades\File;
-use Spatie\Html\HtmlServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class CategoryServiceProvider extends ServiceProvider
 {
+    //=======================================================================
     protected string $moduleName        = 'Category';
     protected string $moduleNameLower   = 'category';
     //=======================================================================
-    /**
-     * Boot the application events.
-     */
     public function boot(): void{
         $this->registerCommands();
         $this->registerCommandSchedules();
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        // $this->loadMigrationsFrom(module_path($this->moduleName, 'database/migrations'));
-        $this->loadMigrationsFrom(dirname(__DIR__) .'/../database/migrations');
-        $this->publishPublic();
-        $this->publishConfig();
-        $this->ensureModuleIsRegistered();
-        $this->ensureModuleStructureExists();
-        $this->ensureModulePublicExists();
-        // $this->ensureModuleConfigExists();
-        $this->copyModuleConfigToMainProject('Category', 'config', 'category');
-        // $this->call('vendor:publish', ['--tag' => 'category-public']);
+        $this->loadMigrationsFrom(module_path($this->moduleName, 'database/migrations'));
+        //=======================================================================
+        /*
+            here we will handle 3 steps
+            1- publish config file with module name
+            2- publish module public folder to main project public/vendor/categry folder
+            3- enable module  
+        */
+        $this->copyModuleConfigToMainProject('category');
+        $this->copyModulePublicToMainProject();
+        $this->enableModule();
+        //=======================================================================
     }
     //=======================================================================
-    /**
-     * Register the service provider.
-     */
     public function register(): void{
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
-        // $this->app->register(HtmlServiceProvider::class);
     }
     //=======================================================================
-    /**
-     * Register commands in the format of Command::class
-     */
     protected function registerCommands(): void{
-        $this->commands([
-            \Modules\Category\Console\PublishModuleCommand::class,
-        ]);
+        // $this->commands([]);
     }
     //=======================================================================
-    /**
-     * Register command Schedules.
-     */
     protected function registerCommandSchedules(): void{
         // $this->app->booted(function () {
         //     $schedule = $this->app->make(Schedule::class);
@@ -61,9 +48,6 @@ class CategoryServiceProvider extends ServiceProvider
         // });
     }
     //=======================================================================
-    /**
-     * Register translations.
-     */
     public function registerTranslations(): void{
         $langPath = resource_path('lang/modules/'.$this->moduleNameLower);
 
@@ -71,51 +55,19 @@ class CategoryServiceProvider extends ServiceProvider
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
             $this->loadJsonTranslationsFrom($langPath);
         } else {
-            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-            //module default setting
-            // $this->loadTranslationsFrom(module_path($this->moduleName, 'lang'), $this->moduleNameLower);
-            // $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'lang'));
-            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-            //change in lang path to be affect project
-            // $this->loadTranslationsFrom(module_path($this->moduleName, 'resources/lang'), $this->moduleNameLower);
-            // $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'resources/lang'));
-            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-            //use dirname(__DIR__)  instead of module_path
-            $this->loadTranslationsFrom(dirname(__DIR__) .'/../resources/lang', $this->moduleNameLower);
-            $this->loadJsonTranslationsFrom(dirname(__DIR__) .'/../resources/lang');
-            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            $this->loadTranslationsFrom(module_path($this->moduleName, 'lang'), $this->moduleNameLower);
+            $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'lang'));
         }
     }
     //=======================================================================
-    /**
-     * Register config.
-     */
-    #to solve ppear another error is  require(/home/murabba/projects/package_development/test-contact-module/config/config.php): Failed to open stream: No such file or directory
     protected function registerConfig(): void{
-        #ensure it's looking for the config file in the correct location
-        // $sourcePath = __DIR__.'/../config/config.php'; //contain module name
-        $sourcePath =dirname(__DIR__) .'/../config/config.php'; //contain module name
-        if (file_exists($sourcePath))
-        {
-            #publish config file in config:folder to be appeared in external project
-            $this->publishes([$sourcePath => config_path($this->moduleNameLower.'.php')], 'config');
-            #put modulenamelower "contact" file in config folder in external project
-            $this->mergeConfigFrom($sourcePath, $this->moduleNameLower);
-        } else
-        {
-            \Illuminate\Support\Facades\Log::warning("Config file not found: {$sourcePath}");
-        }
-        // $this->publishes([module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php')], 'config');
-        // $this->mergeConfigFrom(module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower);
+        $this->publishes([module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php')], 'config');
+        $this->mergeConfigFrom(module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower);
     }
     //=======================================================================
-    /**
-     * Register views.
-     */
     public function registerViews(): void{
-        $viewPath   = resource_path('views/modules/'.$this->moduleNameLower);
-        // $sourcePath = module_path($this->moduleName, 'resources/views');
-        $sourcePath = dirname(__DIR__) .'/../resources/views';
+        $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
+        $sourcePath = module_path($this->moduleName, 'resources/views');
 
         $this->publishes([$sourcePath => $viewPath], ['views', $this->moduleNameLower.'-module-views']);
 
@@ -125,18 +77,10 @@ class CategoryServiceProvider extends ServiceProvider
         Blade::componentNamespace($componentNamespace, $this->moduleNameLower);
     }
     //=======================================================================
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array<string>
-     */
     public function provides(): array{
         return [];
     }
     //=======================================================================
-    /**
-     * @return array<string>
-     */
     private function getPublishableViewPaths(): array{
         $paths = [];
         foreach (config('view.paths') as $path) {
@@ -147,63 +91,8 @@ class CategoryServiceProvider extends ServiceProvider
         return $paths;
     }
     //=======================================================================
-    public function publishPublic(){
-        // Publish CSS and JS files from the package's public folder
-        $this->publishes([
-            dirname(__DIR__).'/../public' => public_path('vendor/category'),
-        ], 'category-public');
-    }
-    //=======================================================================
-    public function publishConfig(){
-        //==============================================================================================
-        // publish config
-        $this->publishes([
-            dirname(__DIR__) .'/../config/config.php' => config_path('category.php'),
-        ], 'category-config');
-        //==============================================================================================
-    }
-    //=======================================================================
-    protected function ensureModuleIsRegistered(): void{
-        $modulesStatuses = base_path('modules_statuses.json');
-        if (!file_exists($modulesStatuses)) {
-            file_put_contents($modulesStatuses, json_encode([$this->moduleName => true]));
-        } else {
-            $statuses = json_decode(file_get_contents($modulesStatuses), true);
-            $statuses[$this->moduleName] = true;
-            file_put_contents($modulesStatuses, json_encode($statuses));
-        }
-    }
-    //=======================================================================
-    protected function ensureModuleStructureExists(): void{
-        #check if Modules/Category folder not found will create it
-        $modulePath = base_path('Modules/Category');
-        if (!is_dir($modulePath)){
-            mkdir($modulePath, 0755, true);
-        }
-        // Copy necessary files from the package to the Modules/Category directory
-        #will copy from all folder in Category folder  and put it in Modules/Category
-        $sourceDir = dirname(__DIR__)  . '/..';
-        $this->recursiveCopy($sourceDir, $modulePath);
-    }
-    //=======================================================================    
-    protected function ensureModuleConfigExists(): void{
-        #check if Modules/Category folder not found will create it
-        $modulePath = config_path('category.php');
-        if (!is_dir($modulePath)){
-            mkdir($modulePath, 0755, true);//TODO
-        }
-        // Copy necessary files from the package to the Modules/Category directory
-       
-        #will copy from config folder and put it in config
-        $sourceDir = dirname(__DIR__)  . '/../config/config.php';
-        $dir = opendir($sourceDir);
-        copy($sourceDir,$modulePath);
-        closedir($dir);
-    }
-    //=======================================================================
-    function copyModuleConfigToMainProject($moduleName, $configFileName, $newConfigFileName){
+    public function copyModuleConfigToMainProject($newConfigFileName){
         // Path to the module's config file
-        // $moduleConfigPath = base_path("modules/{$moduleName}/config/{$configFileName}.php");
         $moduleConfigPath = dirname(__DIR__)  . '/../config/config.php';
 
         // Destination path in the main project's config directory
@@ -215,14 +104,12 @@ class CategoryServiceProvider extends ServiceProvider
         if (File::exists($moduleConfigPath)) {
             // Copy the config file to the main project's config directory
             File::copy($moduleConfigPath, $destinationPath);
-
             return "Config file copied successfully to config directory.";
         }
-
         return "Module config file not found.";
     }
     //=======================================================================
-    protected function ensureModulePublicExists(): void{
+    protected function copyModulePublicToMainProject(): void{
         #check if Modules/Category folder not found will create it
         $modulePath = public_path('vendor/category');
         if (!is_dir($modulePath)){
@@ -249,6 +136,17 @@ class CategoryServiceProvider extends ServiceProvider
             }
         }
         closedir($dir);
+    }
+    //=======================================================================
+    protected function enableModule(): void{
+        $modulesStatuses = base_path('modules_statuses.json');
+        if (!file_exists($modulesStatuses)) {
+            file_put_contents($modulesStatuses, json_encode([$this->moduleName => true]));
+        } else {
+            $statuses = json_decode(file_get_contents($modulesStatuses), true);
+            $statuses[$this->moduleName] = true;
+            file_put_contents($modulesStatuses, json_encode($statuses));
+        }
     }
     //=======================================================================
 }
