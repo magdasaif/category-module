@@ -104,27 +104,27 @@ class CategoryServiceProvider extends ServiceProvider
         if (File::exists($moduleConfigPath)) {
             // Copy the config file to the main project's config directory
             File::copy($moduleConfigPath, $destinationPath);
-            echo "Config file copied successfully to config directory.";
+            //echo "Config file copied successfully to config directory.";
         }
-        echo "Module config file not found.";
+        //echo "Module config file not found.";
     }
     //=======================================================================
     protected function copyModulePublicToMainProject(): void{
-        echo'inside copyModulePublicToMainProject fun';
+        //echo'inside copyModulePublicToMainProject fun';
 
         #check if Modules/Category folder not found will create it
         $modulePath = public_path('vendor/category');
         if (!is_dir($modulePath)){
             mkdir($modulePath, 0755, true);
-            echo'create folder ('.$modulePath.')';
+            //echo'create folder ('.$modulePath.')';
         }
         // Copy necessary files from the package to the Modules/Category directory
         #will copy from all folder in Category folder  and put it in Modules/Category
         $sourceDir = dirname(__DIR__)  . '/../public';
-        echo'sourceDir is ('.$sourceDir.')';
+        //echo'sourceDir is ('.$sourceDir.')';
 
         $this->recursiveCopy($sourceDir, $modulePath);
-        echo'after copy public';
+        //echo'after copy public';
     }
     //=======================================================================
     #handle copy of content of folders
@@ -145,7 +145,7 @@ class CategoryServiceProvider extends ServiceProvider
     }
     //=======================================================================
     protected function enableModule(): void{
-        echo'inside enableModule fun';
+        //echo'inside enableModule fun';
         $modulesStatuses = base_path('modules_statuses.json');
         if (!file_exists($modulesStatuses)) {
             file_put_contents($modulesStatuses, json_encode([$this->moduleName => true]));
@@ -154,7 +154,7 @@ class CategoryServiceProvider extends ServiceProvider
             $statuses[$this->moduleName] = true;
             file_put_contents($modulesStatuses, json_encode($statuses));
         }
-        echo 'done';
+        //echo 'done';
     }
     //=======================================================================
 }

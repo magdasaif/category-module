@@ -1,8 +1,8 @@
 # hmvc Category module as a package
 
 - ✅ Make sure you install nwidart/laravel-modules
+- ✅ Make sure you install joshbrw/laravel-module-installer 
 - ✅ Install this package   
-- ✅ Publish package folders
 - ✅ And then You can deal with it as a hmvc module
     
 
@@ -12,11 +12,11 @@
 #dont forget to install nwidart/laravel-modules 
 composer require nwidart/laravel-modules
 
-#install Setting_module package 
-composer require magdasaif/category-module:dev-dev
+#dont forget to install joshbrw/laravel-module-installer  
+composer require joshbrw/laravel-module-installer 
 
-# publish module folders
-php artisan category:publish
+#install Setting_module package 
+composer require magdasaif/category-module
 
 # then start to browse module routes and access them
 ```
