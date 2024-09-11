@@ -41,7 +41,7 @@ class CategoryController extends Controller implements HasMiddleware
         //
     }
     //============================================================================
-    public function edit(Category $category){
+    public function edit($category){
         return view('category::admin.edit', compact('category'));
     }
     //============================================================================
