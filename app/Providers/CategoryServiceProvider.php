@@ -135,7 +135,9 @@ class CategoryServiceProvider extends ServiceProvider
         // Check if the module's config file exists
         if (File::exists($moduleConfigPath)) {
             // Copy the config file to the main project's config directory
-            File::copy($moduleConfigPath, $destinationPath);
+            if (!file_exists($destinationPath)) {
+                File::copy($moduleConfigPath, $destinationPath);
+            }
             //echo "Config file copied successfully to config directory.";
         }
         //echo "Module config file not found.";
@@ -171,7 +173,6 @@ class CategoryServiceProvider extends ServiceProvider
                 else {
                     if (!file_exists($dst . '/' . $file)) {
                         copy($src . '/' . $file,$dst . '/' . $file);
-                        
                     }
                 }
             }
